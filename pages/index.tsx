@@ -1,45 +1,23 @@
 import Layout from '../components/layout';
-import Link from 'next/link';
 import withData from '../lib/apollo';
 import { useQuery } from '@apollo/react-hooks';
-import POSTS_QUERY from '../graphql/posts.query';
-
-const PostLink: React.FunctionComponent<{
-  title: string;
-  date: string;
-  uri: string;
-}> = ({ title, date, uri }) => (
-  <li>
-    <Link href="/p/[uri]" as={`/p/${uri}`}>
-      <a>{title}</a>
-    </Link>
-    <style jsx>{`
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
-
-      a {
-        text-decoration: none;
-        color: blue;
-        font-family: 'Arial';
-      }
-
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
-  </li>
-);
+import PRODUCTS_QUERY from '../graphql/products.query';
+import { Product } from '../components/product';
 
 const Index = () => {
   const { data, loading, error } = useQuery<{
-    posts: {
-      edges: {
-        node: { id: string; title: string; date: string; uri: string };
+    products: {
+      nodes: {
+        id: string;
+        name: string;
+        slug: string;
+        price: string;
+        image: {
+          sourceUrl: string;
+        };
       }[];
     };
-  }>(POSTS_QUERY);
+  }>(PRODUCTS_QUERY);
   if (loading) {
     return <Layout>Loading...</Layout>;
   }
@@ -48,17 +26,12 @@ const Index = () => {
   }
   return (
     <Layout>
-      <h1>Posts</h1>
-      <ul>
-        {data?.posts.edges.map(({ node }) => (
-          <PostLink
-            title={node.title}
-            date={node.date}
-            uri={node.uri}
-            key={node.id}
-          />
+      <h1>Products</h1>
+      <div className="products">
+        {data?.products.nodes.map(product => (
+          <Product key={product.id} product={product} />
         ))}
-      </ul>
+      </div>
       <style jsx>{`
         h1,
         a {
@@ -67,6 +40,10 @@ const Index = () => {
 
         ul {
           padding: 0;
+        }
+
+        .products {
+          display: flex;
         }
       `}</style>
     </Layout>

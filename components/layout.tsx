@@ -3,8 +3,7 @@ import { NextPage } from 'next';
 
 const layoutStyle = {
   margin: 20,
-  padding: 20,
-  border: '1px solid #DDD'
+  padding: 20
 };
 
 const Layout: NextPage = props => (
