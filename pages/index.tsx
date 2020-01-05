@@ -1,5 +1,4 @@
 import Layout from '../components/layout';
-import withData from '../lib/apollo';
 import { useQuery } from '@apollo/react-hooks';
 import PRODUCTS_QUERY from '../graphql/products.query';
 import { Product } from '../components/product';
@@ -50,4 +49,4 @@ const Index = () => {
   );
 };
 
-export default withData(Index);
+export default Index;

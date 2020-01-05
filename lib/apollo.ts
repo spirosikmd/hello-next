@@ -1,16 +1,16 @@
-import { withData } from 'next-apollo';
-import { HttpLink } from 'apollo-link-http';
+import withApollo from 'next-with-apollo';
+import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import fetch from 'isomorphic-unfetch';
+import { ApolloClient } from 'apollo-client';
 
-const createCache = () => {
-  return new InMemoryCache();
-};
-
-const config = {
-  link: new HttpLink({
-    uri: process.env.GRAPHQL_URL
-  }),
-  createCache
-};
-
-export default withData(config);
+export default withApollo(
+  ({ initialState }) =>
+    new ApolloClient({
+      link: createHttpLink({
+        fetch,
+        uri: process.env.GRAPHQL_URL
+      }),
+      cache: new InMemoryCache().restore(initialState || {})
+    })
+);

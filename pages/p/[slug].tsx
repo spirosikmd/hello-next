@@ -1,7 +1,6 @@
 import Layout from '../../components/layout';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/react-hooks';
-import withData from '../../lib/apollo';
 import PRODUCT_QUERY from '../../graphql/product.query';
 
 const Product = () => {
@@ -45,4 +44,4 @@ const Product = () => {
   );
 };
 
-export default withData(Product);
+export default Product;
