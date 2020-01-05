@@ -27,8 +27,14 @@ const Product = () => {
   return (
     <Layout>
       <h1>{data?.simpleProduct.name}</h1>
-      <img src={data?.simpleProduct.image.sourceUrl} />
-      <p>{data?.simpleProduct.description.replace(/<[/]?[pb]>/g, '')}</p>
+      {data?.simpleProduct.image && (
+        <img src={data?.simpleProduct.image.sourceUrl} />
+      )}
+      {data?.simpleProduct.description && (
+        <p
+          dangerouslySetInnerHTML={{ __html: data?.simpleProduct.description }}
+        />
+      )}
       <style jsx>{`
         h1,
         p {

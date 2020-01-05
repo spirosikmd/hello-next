@@ -12,7 +12,7 @@ export const Product: React.FC<{
   };
 }> = ({ product: { name, slug, price, image } }) => (
   <div className="product">
-    <img src={image.sourceUrl} />
+    {image && <img src={image.sourceUrl} />}
     <Link href="/p/[slug]" as={`/p/${slug}`}>
       <a>{name}</a>
     </Link>
